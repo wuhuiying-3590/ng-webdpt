@@ -49,3 +49,5 @@ gitDiff.sh
 # SonarQube
 .scannerwork
 sonar-project.properties
+
+.history
