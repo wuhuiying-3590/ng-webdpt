@@ -1,0 +1,65 @@
+<!-- 主布局 -->
+<nz-layout class="widget-layout">
+  <header class="widget-header">
+    <div class="header-left">
+      <button nz-button nzType="text">
+        <i nz-icon [nzIconfont]="'icon-left'"></i>
+      </button>
+      <span class="title">{{ title }}</span>
+      <span class="save-time">{{ saveTime }}</span>
+    </div>
+    <div class="header-right">
+      <button nz-button class="save-btn" (click)="saveTemporary()">暂存</button>
+      <button
+        nz-button
+        nzType="primary"
+        class="template-btn"
+        (click)="saveAsTemplate()"
+      >
+        保存为模板
+      </button>
+    </div>
+  </header>
+  <nz-layout class="main-content">
+    <!-- 左侧组件面板 -->
+    <app-component-panel
+      *ngIf="showLeft; else elseLeftBlock"
+      class="left-panel"
+      (componentAdded)="handleComponentAdded($event)"
+      (closePanel)="handleCloseLeftPanel()"
+    >
+    </app-component-panel>
+    <ng-template #elseLeftBlock>
+      <button
+        nz-button
+        nzType="text"
+        class="panel-btn"
+        (click)="handleOpenLeftPanel()"
+      >
+        <i nz-icon [nzIconfont]="'icon-right-panel'"></i>
+      </button>
+    </ng-template>
+
+    <!-- 中间画布区域 -->
+    <app-design-canvas
+      class="canvas-area"
+      [components]="canvasComponents"
+      (selectComponent)="handleSelectComponent($event)"
+    >
+    </app-design-canvas>
+
+    <!-- 右侧属性面板 -->
+    <app-property-panel
+      *ngIf="showRight; else elseRightBlock"
+      class="right-panel"
+      [selectedComponent]="selectedComponent"
+      (closePanel)="handleCloseRightPanel()"
+    >
+    </app-property-panel>
+    <ng-template #elseRightBlock>
+      <button nz-button nzType="text">
+        <i nz-icon [nzIconfont]="'icon-left-panel'"></i>
+      </button>
+    </ng-template>
+  </nz-layout>
+</nz-layout>

@@ -1,0 +1,13 @@
+{
+  "prog": {
+    "library": "资料库"
+  },
+  "menu": {
+    "space": "工作空间"
+  },
+  "page": {
+    "purchasing-modify": "採購修改",
+    "dw-group-add": "集團新增",
+    "dw-group-view": "集團檢視"
+  }
+}

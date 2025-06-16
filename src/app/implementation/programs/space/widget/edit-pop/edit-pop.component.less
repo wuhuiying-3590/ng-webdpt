@@ -1,0 +1,48 @@
+.selecting-box {
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: 0;
+  left: 0;
+  .selecting-border {
+    width: 60px;
+    height: 40px;
+    // border: 1px solid #4e6fff;
+    transform: translate3d(0px, 0px, 0px);
+    position: relative;
+    z-index: 3;
+    pointer-events: none;
+    &.hidePop {
+      .edit-pop {
+        opacity: 0;
+      }
+    }
+  }
+  .edit-pop {
+    opacity: 1;
+    pointer-events: all;
+    width: fit-content;
+    height: 32px;
+    background: #ffffff;
+    // background: red;
+    box-shadow: 0px 5px 20px 0px rgba(36, 47, 96, 0.08),
+      0px 2px 8px 0px rgba(36, 47, 96, 0.04);
+    border-radius: 4px 4px 4px 4px;
+    position: absolute;
+    right: 0;
+    top: -40px;
+    padding: 8px;
+    line-height: 16px;
+    white-space: nowrap;
+    z-index: 3;
+    ::ng-deep i {
+      cursor: pointer;
+    }
+    ::ng-deep i + i {
+      margin-left: 16px;
+    }
+    ::ng-deep svg {
+      font-size: 16px;
+    }
+  }
+}

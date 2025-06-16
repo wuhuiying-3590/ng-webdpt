@@ -1,0 +1,60 @@
+<div
+  cdkDropList
+  (cdkDropListDropped)="onComponentDrop($event)"
+  class="component-list"
+  *ngIf="treeData.length > 0"
+>
+  <div class="canvas-component" cdkDrag>
+    <!-- <div>{{ tree.name }}</div> -->
+    <div
+      *ngFor="let c of treeData; let c_i = index"
+      (click)="selectComponentItem(c)"
+      class="component-content"
+      [ngSwitch]="c.type"
+    >
+      <div
+        *ngSwitchCase="'columnLayout'"
+        class="columnLayout-component"
+        [style]="getComponentStyles(c)"
+      >
+        <div
+          *ngFor="let s of c.children; let s_i = index"
+          class="slot-component"
+          [style]="getComponentStyles(s)"
+        >
+          <!-- <app-list-item></app-list-item> -->
+        </div>
+      </div>
+      <div
+        *ngSwitchCase="'columnLayout1_1_1'"
+        class="columnLayout1_1_1-component"
+      >
+        <div
+          *ngFor="let s of c.children; let s_i = index"
+          class="slot-component"
+          [style]="getComponentStyles(s)"
+        ></div>
+      </div>
+      <!-- <div *ngSwitchCase="'title'" class="title-component">标题</div>
+      <div *ngSwitchCase="'text'" class="text-component">内容文本</div>
+      <div *ngSwitchCase="'button'" class="button-component">
+        <button nz-button nzType="primary">按钮</button>
+      </div>
+      <div *ngSwitchCase="'image'" class="image-component">
+        <div class="image-placeholder">图片</div>
+      </div> -->
+      <!-- <div *ngSwitchDefault>{{ tree.name }}</div> -->
+    </div>
+
+    <!-- <div class="component-actions">
+      <button
+        nz-button
+        nzType="text"
+        nzShape="circle"
+        (click)="removeComponent(i); $event.stopPropagation()"
+      >
+        <i nz-icon nzType="delete"></i>
+      </button>
+    </div> -->
+  </div>
+</div>

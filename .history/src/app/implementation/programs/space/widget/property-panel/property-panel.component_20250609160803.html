@@ -1,0 +1,515 @@
+<div class="property-panel">
+  <div class="panel-header">
+    <span class="panel-title">基础配置</span>
+    <button nz-button nzType="text" (click)="handleClosePanel()">
+      <i nz-icon [nzIconfont]="'icon-right-panel'"></i>
+    </button>
+  </div>
+
+  <div *ngIf="!selectedComponent" class="no-component-selected">
+    <div class="empty-hint">
+      <img src="assets/img/widget/empty-box.webp" alt="settings" />
+      <p>选择元素查看相关配置</p>
+    </div>
+  </div>
+
+  <div *ngIf="selectedComponent" class="component-properties">
+    <form nz-form [formGroup]="propertyForm">
+      <!-- 基本信息 -->
+      <div class="property-section">
+        <ng-container
+          *ngIf="
+            [
+              'columnLayout',
+              'columnLayout1_1_1',
+              'scrollLayout',
+              'listLayout'
+            ].includes(selectedComponent.type)
+          "
+        >
+          <div>
+            <div class="slot-label">
+              槽位
+              <div
+                class="slot-extra"
+                (click)="addSlot()"
+                *ngIf="
+                  (['columnLayout', 'columnLayout1_1_1'].includes(
+                    selectedComponent.type
+                  ) &&
+                    selectedComponent.children.length < 6) ||
+                  (['scrollLayout', 'listLayout'].includes(
+                    selectedComponent.type
+                  ) &&
+                    selectedComponent.children.length < 20)
+                "
+              >
+                <i nz-icon [nzIconfont]="'icon-up'"></i>
+                <span class="slot-add">添加槽位</span>
+              </div>
+            </div>
+
+            <div class="slot-list">
+              <div
+                *ngFor="let item of selectedComponent.children; let i = index"
+                class="slot-item"
+              >
+                <div>
+                  <i class="slot-icon" nz-icon [nzIconfont]="'icon-shu'"></i>
+                  <span class="slot-name">槽位 {{ i + 1 }}</span>
+                </div>
+                <button
+                  nz-button
+                  nzType="text"
+                  (click)="deleteSlot(item)"
+                  *ngIf="selectedComponent.children.length > 1"
+                >
+                  <i nz-icon [nzIconfont]="'icon-up'"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container
+          *ngIf="
+            [
+              'root',
+              'columnLayout',
+              'columnLayout1_1_1',
+              'scrollLayout',
+              'listLayout'
+            ].includes(selectedComponent.type)
+          "
+        >
+          <nz-form-item class="form-item-vertical">
+            <nz-form-label nzFor="backgroundType">背景</nz-form-label>
+            <nz-form-control>
+              <nz-radio-group
+                id="backgroundType"
+                formControlName="backgroundType"
+                nzButtonStyle="solid"
+                class="w-radio"
+                (ngModelChange)="backgroundTypeChange($event)"
+              >
+                <label
+                  *ngFor="let item of backgroundTypeOption"
+                  nz-radio-button
+                  [nzValue]="item.value"
+                  >{{ item.label }}</label
+                >
+              </nz-radio-group>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item
+            class="form-item-vertical"
+            *ngIf="propertyForm.get('backgroundType')?.value === 'color'"
+          >
+            <nz-form-label nzFor="backgroundColor">选择颜色</nz-form-label>
+            <nz-form-control>
+              <nz-select id="backgroundColor" formControlName="backgroundColor">
+                <nz-option
+                  *ngFor="let item of chooseColorOption"
+                  nzCustomContent
+                  [nzLabel]="item.label"
+                  [nzValue]="item.value"
+                >
+                  <i nz-icon nzType="windows"></i>
+                  {{ item.label }}
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </ng-container>
+        <ng-container
+          *ngIf="['text', 'divider'].includes(selectedComponent.type)"
+        >
+          <nz-form-item class="form-item-vertical">
+            <nz-form-label nzFor="color">颜色</nz-form-label>
+            <nz-form-control>
+              <nz-select id="color" formControlName="color">
+                <nz-option
+                  *ngFor="let item of chooseColorOption"
+                  nzCustomContent
+                  [nzLabel]="item.label"
+                  [nzValue]="item.value"
+                >
+                  <i nz-icon nzType="windows"></i>
+                  {{ item.label }}
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </ng-container>
+        <ng-container *ngIf="['text'].includes(selectedComponent.type)">
+          <nz-form-item class="form-item-inline">
+            <nz-form-label nzFor="fontWeight">字体</nz-form-label>
+            <nz-form-control>
+              <nz-radio-group
+                id="fontWeight"
+                formControlName="fontWeight"
+                nzButtonStyle="solid"
+                class="w-radio w160"
+              >
+                <label
+                  *ngFor="let item of fontWeightOption"
+                  nz-radio-button
+                  [nzValue]="item.value"
+                  >{{ item.label }}</label
+                >
+              </nz-radio-group>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item class="form-item-inline">
+            <nz-form-label nzFor="fontSize">字体大小</nz-form-label>
+            <nz-form-control>
+              <nz-select id="fontSize" formControlName="fontSize">
+                <nz-option
+                  *ngFor="let item of fontSizeOption"
+                  nzCustomContent
+                  [nzLabel]="item.label"
+                  [nzValue]="item.value"
+                >
+                  {{ item.label }}
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item class="form-item-inline">
+            <nz-form-label nzFor="textAlign">对齐</nz-form-label>
+            <nz-form-control>
+              <nz-radio-group
+                id="textAlign"
+                formControlName="textAlign"
+                nzButtonStyle="solid"
+                class="w-radio w160"
+              >
+                <label
+                  *ngFor="let item of textAlignOption"
+                  nz-radio-button
+                  [nzValue]="item.value"
+                >
+                  <i nz-icon [nzIconfont]="'icon-left-panel'"></i>
+                </label>
+              </nz-radio-group>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item class="form-item-inline">
+            <nz-form-label nzFor="lines">最大行数</nz-form-label>
+            <nz-form-control>
+              <nz-input-number
+                class="w160"
+                id="lines"
+                formControlName="lines"
+                [nzMin]="1"
+                [nzMax]="100"
+                [nzStep]="1"
+              ></nz-input-number>
+            </nz-form-control>
+          </nz-form-item>
+        </ng-container>
+        <ng-container *ngIf="['title'].includes(selectedComponent.type)">
+          <nz-form-item class="form-item-vertical">
+            <nz-form-label nzFor="color">选择颜色</nz-form-label>
+            <nz-form-control>
+              <nz-select id="color" formControlName="color">
+                <nz-option
+                  *ngFor="let item of chooseColorOption"
+                  nzCustomContent
+                  [nzLabel]="item.label"
+                  [nzValue]="item.value"
+                >
+                  <i nz-icon nzType="windows"></i>
+                  {{ item.label }}
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item class="form-item-inline">
+            <nz-form-label nzFor="textAlign">对齐</nz-form-label>
+            <nz-form-control>
+              <nz-radio-group
+                id="textAlign"
+                formControlName="textAlign"
+                nzButtonStyle="solid"
+                class="w-radio w160"
+              >
+                <label
+                  *ngFor="let item of textAlignOption"
+                  nz-radio-button
+                  [nzValue]="item.value"
+                >
+                  <i nz-icon [nzIconfont]="'icon-left-panel'"></i>
+                </label>
+              </nz-radio-group>
+            </nz-form-control>
+          </nz-form-item>
+        </ng-container>
+        <ng-container *ngIf="['divider'].includes(selectedComponent.type)">
+          <nz-form-item class="form-item-vertical">
+            <nz-form-label nzFor="marginTop">上边距</nz-form-label>
+            <nz-form-control>
+              <nz-select id="marginTop" formControlName="marginTop">
+                <nz-option
+                  *ngFor="let item of marginOption"
+                  nzCustomContent
+                  [nzLabel]="item.label"
+                  [nzValue]="item.value"
+                >
+                  {{ item.label }}
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item class="form-item-vertical">
+            <nz-form-label nzFor="marginTop">下边距</nz-form-label>
+            <nz-form-control>
+              <nz-select id="marginBottom" formControlName="marginBottom">
+                <nz-option
+                  *ngFor="let item of marginOption"
+                  nzCustomContent
+                  [nzLabel]="item.label"
+                  [nzValue]="item.value"
+                >
+                  {{ item.label }}
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item class="form-item-vertical">
+            <nz-form-label nzFor="borderType">线型</nz-form-label>
+            <nz-form-control>
+              <nz-select id="borderType" formControlName="borderType">
+                <nz-option
+                  *ngFor="let item of borderTypeOption"
+                  nzCustomContent
+                  [nzLabel]="item.label"
+                  [nzValue]="item.value"
+                >
+                  {{ item.label }}
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </ng-container>
+        <ng-container *ngIf="selectedComponent.type === 'slot'">
+          <nz-form-item class="form-item-inline">
+            <nz-form-label nzFor="positionY">垂直对齐</nz-form-label>
+            <nz-form-control>
+              <nz-radio-group
+                id="positionY"
+                formControlName="positionY"
+                nzButtonStyle="solid"
+                class="w-radio w160"
+              >
+                <label
+                  *ngFor="let item of positionYOption"
+                  nz-radio-button
+                  [nzValue]="item.value"
+                >
+                  <i nz-icon [nzIconfont]="'icon-left-panel'"></i>
+                </label>
+              </nz-radio-group>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item class="form-item-inline">
+            <nz-form-label nzFor="positionX">水平对齐</nz-form-label>
+            <nz-form-control>
+              <nz-radio-group
+                id="positionX"
+                formControlName="positionX"
+                nzButtonStyle="solid"
+                class="w-radio w160"
+              >
+                <label
+                  *ngFor="let item of positionXOption"
+                  nz-radio-button
+                  [nzValue]="item.value"
+                >
+                  <i nz-icon [nzIconfont]="'icon-left-panel'"></i>
+                </label>
+              </nz-radio-group>
+            </nz-form-control>
+          </nz-form-item>
+        </ng-container>
+        <ng-container
+          *ngIf="
+            [
+              'root',
+              'columnLayout',
+              'columnLayout1_1_1',
+              'scrollLayout',
+              'listLayout',
+              'slot'
+            ].includes(selectedComponent.type)
+          "
+        >
+          <nz-form-item class="form-item-inline">
+            <nz-form-label nzFor="lineSpace">行间距</nz-form-label>
+            <nz-form-control>
+              <nz-select
+                id="lineSpace"
+                formControlName="lineSpace"
+                [nzOptions]="getLineSpaceOption(selectedComponent.type)"
+              ></nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item class="form-item-inline">
+            <nz-form-label nzFor="internalSpace">内边距</nz-form-label>
+            <nz-form-control>
+              <nz-select
+                id="internalSpace"
+                formControlName="internalSpace"
+                [nzOptions]="getInternalSpaceOption(selectedComponent.type)"
+              ></nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </ng-container>
+        <ng-container
+          *ngIf="
+            !['root', 'slot', 'text', 'title', 'divider', 'image'].includes(
+              selectedComponent.type
+            )
+          "
+        >
+          <nz-form-item class="form-item-inline">
+            <nz-form-label nzFor="borderRadius">圆角</nz-form-label>
+            <nz-form-control>
+              <nz-select
+                id="borderRadius"
+                formControlName="borderRadius"
+                [nzOptions]="borderRadiusOption"
+              ></nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </ng-container>
+        <ng-container *ngIf="['image'].includes(selectedComponent.type)">
+          <nz-form-item class="form-item-vertical">
+            <nz-form-label nzFor="mode">模式</nz-form-label>
+            <nz-form-control>
+              <nz-radio-group
+                id="mode"
+                formControlName="mode"
+                nzButtonStyle="solid"
+                class="w-radio"
+              >
+                <label
+                  *ngFor="let item of modeOption"
+                  nz-radio-button
+                  [nzValue]="item.value"
+                  >{{ item.label }}</label
+                >
+              </nz-radio-group>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item class="form-item-vertical">
+            <nz-form-label nzFor="fixedSize">尺寸</nz-form-label>
+            <nz-form-control>
+              <nz-radio-group
+                id="fixedSize"
+                formControlName="fixedSize"
+                nzButtonStyle="solid"
+                class="w-radio"
+              >
+                <label
+                  *ngFor="let item of fixedSizeOption"
+                  nz-radio-button
+                  [nzValue]="item.value"
+                  >{{ item.label }}</label
+                >
+              </nz-radio-group>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item
+            class="form-item-inline"
+            *ngIf="propertyForm.get('fixedSize')?.value === 'customize'"
+          >
+            <nz-form-label nzFor="customWidth">宽度</nz-form-label>
+            <nz-form-control>
+              <nz-input-number
+                class="w160"
+                id="lines"
+                formControlName="customWidth"
+                [nzMin]="0"
+                [nzMax]="420"
+                [nzStep]="1"
+              ></nz-input-number>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item
+            class="form-item-inline"
+            *ngIf="propertyForm.get('fixedSize')?.value === 'customize'"
+          >
+            <nz-form-label nzFor="customHeight">高度</nz-form-label>
+            <nz-form-control>
+              <nz-input-number
+                class="w160"
+                id="lines"
+                formControlName="customHeight"
+                [nzMin]="0"
+                [nzMax]="800"
+                [nzStep]="1"
+              ></nz-input-number>
+            </nz-form-control>
+          </nz-form-item>
+        </ng-container>
+        <ng-container
+          *ngIf="['text', 'image'].includes(selectedComponent.type)"
+        >
+          <div class="advanced-setting">高级设置</div>
+          <nz-form-item class="form-item-inline">
+            <nz-form-label nzFor="cycleFlag"
+              >循环渲染 <i nz-icon [nzIconfont]="'icon-left-panel'"></i>
+            </nz-form-label>
+            <nz-form-control>
+              <nz-switch id="cycleFlag" formControlName="cycleFlag"></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </ng-container>
+        <!-- 根据组件类型显示不同的属性设置 -->
+        <!-- <ng-container
+          class="property-section"
+          *ngIf="
+            selectedComponent.type === 'title' ||
+            selectedComponent.type === 'text'
+          "
+        >
+          <nz-form-item>
+            <nz-form-label>文本内容</nz-form-label>
+            <nz-form-control>
+              <textarea
+                nz-input
+                formControlName="textContent"
+                rows="3"
+              ></textarea>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label>字体大小</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="fontSize" placeholder="14px" />
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label>字体粗细</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="fontWeight">
+                <nz-option nzValue="normal" nzLabel="常规"></nz-option>
+                <nz-option nzValue="bold" nzLabel="粗体"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label>文本颜色</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="color" placeholder="#000000" />
+            </nz-form-control>
+          </nz-form-item>
+        </ng-container> -->
+      </div>
+    </form>
+    <!-- <button nz-button (click)="saveProperties($event)">应用</button> -->
+  </div>
+</div>

@@ -1,0 +1,41 @@
+/* You can add global styles to this file; and also import other style files */
+/* Third Library */
+
+/* 平台UI套件 */
+@import '~ng-zorro-antd/src/ng-zorro-antd.less';
+@import './app/style.less';
+/* 隐藏所有滚动条但保留滚动功能 */
+::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+body {
+  -ms-overflow-style: none; /* IE、Edge */
+  scrollbar-width: none; /* Firefox */
+}
+* {
+  box-sizing: border-box;
+}
+@primary-color: #4e6fff;
+.sortable-drag {
+  background-color: red;
+  // opacity: 0;
+}
+.sortable-ghost {
+  width: 100% !important;
+  height: 2px;
+  padding: 0px !important;
+  background: #4e6fff !important;
+  div {
+    display: none;
+  }
+}
+#custom-drag-preview {
+  pointer-events: none; /* 确保不影响鼠标事件 */
+  display: flex;
+  align-items: center;
+  border: 1px solid #4e6fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  opacity: 0.8;
+  padding: 5px 10px;
+}

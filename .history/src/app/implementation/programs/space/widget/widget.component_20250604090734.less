@@ -1,0 +1,81 @@
+// .widget-layout {
+//   height: 100vh;
+//   .widget-header {
+//     background: #ffffff;
+//     border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+//     height: 50px;
+//     line-height: 50px;
+//     padding: 0 20px;
+//     display: flex;
+//     align-items: center;
+//   }
+//   .mudule-name {
+//     margin-left: 10px;
+//   }
+//   .header-right {
+//     margin-left: auto;
+//   }
+// }
+/* app.component.scss */
+.widget-layout {
+  height: 100vh;
+
+  .widget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px;
+    height: 56px;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+
+    .header-left {
+      display: flex;
+      align-items: center;
+
+      .title {
+        margin-left: 12px;
+        font-size: 16px;
+        font-weight: 500;
+      }
+
+      .save-time {
+        margin-left: 16px;
+        color: #999;
+        font-size: 12px;
+      }
+    }
+
+    .header-right {
+      .save-btn {
+        margin-right: 8px;
+      }
+    }
+  }
+
+  .main-content {
+    height: calc(100vh - 56px);
+
+    .left-panel {
+      width: 260px;
+      background: #fff;
+      border-right: 1px solid #f0f0f0;
+      overflow-y: auto;
+    }
+
+    .canvas-area {
+      flex: 1;
+      background: #f5f7fa;
+      position: relative;
+      overflow: auto;
+    }
+
+    .right-panel {
+      width: 300px;
+      background: #fff;
+      border-left: 1px solid #f0f0f0;
+      overflow-y: auto;
+    }
+  }
+}

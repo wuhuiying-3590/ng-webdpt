@@ -1,0 +1,34 @@
+<div
+  class="design-canvas"
+  [ngStyle]="getComponentStyles(root)"
+  (click)="selectComponentItem($event, root)"
+  [ngClass]="{ selected: isSelected(root) }"
+>
+  <app-list-item
+    *ngIf="treeData.length > 0; else emptyTpl"
+    #listItem
+    class="root-child"
+    [components]="treeData"
+    [style]="getComponentChildStyles(root)"
+    [sortablejs]="treeData"
+    [sortablejsOptions]="rootSortableOptions"
+    [attr.data-p-id]="'root'"
+    [rootSortableOptions]="rootSortableOptions"
+  ></app-list-item>
+  <ng-template #emptyTpl>
+    <div
+      [hidden]="treeData.length > 0"
+      class="empty-canvas"
+      [sortablejs]="[]"
+      [sortablejsOptions]="rootSortableOptions"
+    >
+      <nz-empty nzNotFoundContent="暂无内容" [nzNotFoundImage]="emptyImage">
+      </nz-empty>
+      <ng-template #emptyImage>
+        <div class="empty-image">
+          <img src="assets/img/widget/empty-box.webp" alt="empty" />
+        </div>
+      </ng-template>
+    </div>
+  </ng-template>
+</div>

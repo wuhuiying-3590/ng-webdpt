@@ -1,0 +1,64 @@
+const baseOptions = [
+  {
+    label: '0px',
+    value: '0px',
+  },
+  {
+    label: '2px',
+    value: '2px',
+  },
+  {
+    label: '4px',
+    value: '4px',
+  },
+  {
+    label: '8px',
+    value: '8px',
+  },
+  {
+    label: '12px',
+    value: '12px',
+  },
+  {
+    label: '16px',
+    value: '16px',
+  },
+  {
+    label: '20px',
+    value: '20px',
+  },
+  {
+    label: '24px',
+    value: '24px',
+  },
+];
+const getLineSpaceOptions = (origin) => {
+  origin.splice(1, 1);
+  return origin;
+};
+
+export const lineSpaceOptions = getLineSpaceOptions([...baseOptions]);
+export const internalSpaceOptions = [...baseOptions];
+
+export const backgroundTypeOptions = [
+  {
+    label: '0px',
+    value: '0px',
+  },
+  {
+    label: '4px',
+    value: '4px',
+  },
+  {
+    label: '8px',
+    value: '8px',
+  },
+  {
+    label: '12px',
+    value: '12px',
+  },
+  {
+    label: '16px',
+    value: '16px',
+  },
+];

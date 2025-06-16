@@ -1,0 +1,84 @@
+import { Injectable } from '@angular/core';
+import { ComponentType } from '../widget/models/item';
+const HORIZONTAL_STYLE = {
+  left: 'flex-start',
+  middle: 'center',
+  right: 'flex-end',
+};
+const VERTICAL_STYLE = {
+  top: 'flex-start',
+  center: 'center',
+  bottom: 'flex-end',
+};
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ComponentDataService {
+  constructor() {}
+  getComponentStyles(component: any): any {
+    const style = component.style || {};
+    const result: any = {};
+
+    // 背景类型：透明：transparent  或者 颜色:color  #222222 的颜色值
+    if (style.backgroundType && style.backgroundType !== 'transparent') {
+      result.backgroundColor = style.backgroundType;
+    }
+
+    // 行间距
+    if (style.lineSpace) {
+      // if (component.type === ComponentType.SINGLE_COLUMN) {
+      //   result.columnGap = style.lineSpace;
+      // } else if (
+      //   component.type === ComponentType.SLOT ||
+      //   component.type === ComponentType.ROOT ||
+      //   component.type === ComponentType.LIST
+      // ) {
+      //   result.rowGap = style.lineSpace;
+      // }
+      result.gap = style.lineSpace;
+    }
+    // 内边距
+    if (style.internalSpace) {
+      result.padding = style.internalSpace;
+    }
+    // 外框圆角
+    if (style.borderRadius) {
+      result.borderRadius = style.borderRadius;
+    }
+    //  水平对齐  left / middle / right
+    if (style.positionX) {
+      result.alignItems = HORIZONTAL_STYLE[style.positionX];
+    }
+    // 垂直对齐 top / center / bottom
+    if (style.positionY) {
+      result.justifyContent = VERTICAL_STYLE[style.positionY];
+    }
+
+    // Handle text styling
+    if (style.color) {
+      if (component.type === ComponentType.DIVIDER) {
+        result.border = `1px ${style.borderType} ${style.color}`;
+      } else {
+        result.color = style.color;
+      }
+    }
+    if (style.marginTop) {
+      result.marginTop = style.marginTop;
+    }
+
+    if (style.fontWeight) {
+      result.fontWeight = style.fontWeight;
+    }
+
+    if (style.fontSize) {
+      result.fontSize = style.fontSize;
+    }
+
+    if (style.textAlign) {
+      result.textAlign = style.textAlign;
+    }
+
+    return result;
+  }
+}

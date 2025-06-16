@@ -1,0 +1,80 @@
+<!-- 主布局 -->
+<nz-layout class="widget-layout">
+  <header class="widget-header">
+    <div class="header-left">
+      <button nz-button nzType="text">
+        <i nz-icon nzType="left"></i>
+      </button>
+      <span class="title">{{ title }}</span>
+      <span class="save-time">{{ saveTime }}</span>
+    </div>
+    <div class="header-right">
+      <button nz-button class="save-btn" (click)="saveTemporary()">暂存</button>
+      <button
+        nz-button
+        nzType="primary"
+        class="template-btn"
+        (click)="saveAsTemplate()"
+      >
+        保存为模板
+      </button>
+    </div>
+  </header>
+  <nz-layout>
+    <!-- 左侧组件区 -->
+    <!-- <nz-sider nzWidth="220" style="background: #f5f7fa; padding: 16px">
+      <div>
+        <h3>组件</h3>
+        <nz-collapse>
+          <nz-collapse-panel nzHeader="布局组件" [nzActive]="true">
+            <button nz-button nzBlock>单列</button>
+            <button nz-button nzBlock>多列</button>
+            <button nz-button nzBlock>横滑</button>
+            <button nz-button nzBlock>列表</button>
+          </nz-collapse-panel>
+          <nz-collapse-panel nzHeader="基础组件">
+            <button nz-button nzBlock>标题</button>
+            <button nz-button nzBlock>内容</button>
+            <button nz-button nzBlock>分割线</button>
+            <button nz-button nzBlock>图片</button>
+            <button nz-button nzBlock>按钮</button>
+          </nz-collapse-panel>
+          <nz-collapse-panel nzHeader="高阶组件">
+            <button nz-button nzBlock>表格</button>
+            <button nz-button nzBlock>动态表格</button>
+          </nz-collapse-panel>
+        </nz-collapse>
+      </div>
+    </nz-sider> -->
+    <!-- 左侧组件面板 -->
+    <app-component-panel
+      class="left-panel"
+      (componentAdded)="handleComponentAdded($event)"
+    >
+    </app-component-panel>
+    <!-- 中间画布区 -->
+    <nz-content
+      style="
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <div style="text-align: center">
+        <!-- <img
+          src="https://img.alicdn.com/imgextra/i1/O1CN01Qw0QwC1w6Qw6Qw6Qw_!!6000000000000-2-tps-200-200.png"
+          width="120"
+        /> -->
+        <div style="color: #bfbfbf; margin-top: 16px">暂无内容</div>
+      </div>
+    </nz-content>
+
+    <!-- 右侧基础配置区 -->
+    <nz-sider nzWidth="260" style="background: #fafbfc; padding: 16px">
+      <div style="text-align: center">
+        <div style="color: #bfbfbf; margin-top: 16px">选择元素查看相关配置</div>
+      </div>
+    </nz-sider>
+  </nz-layout>
+</nz-layout>

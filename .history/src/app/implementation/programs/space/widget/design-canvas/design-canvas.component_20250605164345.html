@@ -1,0 +1,61 @@
+<!-- <div
+  class="design-canvas"
+  (dragover)="onDragOver($event)"
+  (drop)="onDrop($event)"
+> -->
+<app-list-item
+  *ngIf="treeData?.length > 0; else emptyTpl"
+  class="design-canvas"
+  [components]="treeData"
+  [ngStyle]="getComponentStyles(root)"
+  (click)="selectComponentItem($event, root)"
+  [ngClass]="{ selected: isSelected(root) }"
+></app-list-item>
+<ng-template #emptyTpl>
+  <div class="empty-canvas">
+    <nz-empty nzNotFoundContent="暂无内容" [nzNotFoundImage]="emptyImage">
+    </nz-empty>
+    <ng-template #emptyImage>
+      <div class="empty-image">
+        <img src="assets/img/widget/empty-box.webp" alt="empty" />
+      </div>
+    </ng-template>
+  </div>
+</ng-template>
+<!-- <div
+    cdkDropList
+    (cdkDropListDropped)="onComponentDrop($event)"
+    class="component-list"
+    *ngIf="treeData.length > 0"
+  >
+    <div
+      *ngFor="let component of components; let i = index"
+      class="canvas-component"
+      cdkDrag
+      (click)="selectComponentItem(component)"
+    >
+      <div class="component-content" [ngSwitch]="component.type">
+        <div *ngSwitchCase="'title'" class="title-component">标题</div>
+        <div *ngSwitchCase="'text'" class="text-component">内容文本</div>
+        <div *ngSwitchCase="'button'" class="button-component">
+          <button nz-button nzType="primary">按钮</button>
+        </div>
+        <div *ngSwitchCase="'image'" class="image-component">
+          <div class="image-placeholder">图片</div>
+        </div>
+        <div *ngSwitchDefault>{{ component.name }}</div>
+      </div>
+
+      <div class="component-actions">
+        <button
+          nz-button
+          nzType="text"
+          nzShape="circle"
+          (click)="removeComponent(i); $event.stopPropagation()"
+        >
+          <i nz-icon nzType="delete"></i>
+        </button>
+      </div>
+    </div>
+  </div> -->
+<!-- </div> -->

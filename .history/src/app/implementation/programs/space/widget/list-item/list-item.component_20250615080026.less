@@ -1,0 +1,200 @@
+.columnLayout-component,
+.columnLayout1_1_1-component,
+.scrollLayout-component,
+.listLayout-component {
+  width: 100%;
+  // min-height: 40px;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.columnLayout-component > .columnLayout-child,
+.columnLayout1_1_1-component > .columnLayout1_1_1-child,
+.scrollLayout-component > .scrollLayout-child {
+  display: flex;
+  flex-direction: row;
+}
+.listLayout-component > .listLayout-child,
+.slot-component > .slot-child {
+  display: flex;
+  flex-direction: column;
+}
+
+.slot-component {
+  min-height: 40px;
+  // padding: 4px;
+  border-radius: 8px;
+  background: transparent;
+  flex-grow: 0;
+  // background: #e8e9f1;
+  &.empty {
+    background: #e8e9f1;
+  }
+  // 宽度高度不能改小，否侧不会触发onAdd---componentSortablejsOptions
+  & > .slot-child {
+    width: 100%;
+    // height: 100%;
+    height: fit-content;
+    min-height: 100%;
+  }
+}
+.listLayout-child {
+  .slot-component {
+    width: 100%;
+  }
+  .slot-child.empty {
+    height: 34px;
+  }
+}
+.columnLayout-component,
+.columnLayout1_1_1-component {
+  .slot-component {
+    flex: 1;
+  }
+}
+
+.scrollLayout-component {
+  .scrollLayout-child {
+    overflow-x: auto;
+    overflow-y: visible;
+  }
+  .slot-component {
+    position: relative;
+    width: 172px;
+    flex-shrink: 0; // 不允许缩小
+    flex-grow: 1; // 允许撑开
+  }
+  .listLayout-child {
+    .slot-component {
+      width: 100%;
+    }
+  }
+}
+.columnLayout-child > .slot-component {
+  //
+}
+.slot-child {
+  width: 100%;
+  .scrollLayout-component {
+    max-width: 100%;
+    .slot-component {
+      // width: auto; // 宽度自适应
+      // flex-shrink: 1; //允许缩小
+    }
+  }
+}
+
+.title-component,
+.text-component,
+.divider-component,
+.image-component {
+  border-radius: 8px;
+}
+.button-component {
+  border-radius: 4px;
+  width: fit-content;
+  &.wFill {
+    width: 100%;
+  }
+}
+.text-component {
+  display: inline-block;
+}
+.divider-component {
+  padding: 2px;
+  width: 100%;
+}
+.image-component {
+  width: fit-content;
+  height: fit-content;
+  .image-child {
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+    }
+  }
+}
+
+.columnLayout-component,
+.columnLayout1_1_1-component,
+.slot-component,
+.scrollLayout-component,
+.listLayout-component,
+.title-component,
+.text-component,
+.divider-component,
+.image-component,
+.button-component {
+  position: relative;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+}
+.selected,
+.hover {
+  border: 1px solid #4e6fff;
+}
+.edit-pop {
+  width: fit-content;
+  height: 32px;
+  background: #ffffff;
+  // background: red;
+  box-shadow: 0px 5px 20px 0px rgba(36, 47, 96, 0.08),
+    0px 2px 8px 0px rgba(36, 47, 96, 0.04);
+  border-radius: 4px 4px 4px 4px;
+  position: absolute;
+  right: 0;
+  top: -40px;
+  padding: 8px;
+  line-height: 16px;
+  white-space: nowrap;
+  ::ng-deep i {
+    cursor: pointer;
+  }
+  ::ng-deep i + i {
+    margin-left: 16px;
+  }
+  ::ng-deep svg {
+    font-size: 16px;
+  }
+}
+
+.button-child {
+  width: 80px;
+  height: 32px;
+  line-height: 30px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+.btn-primary {
+  background: #4e6fff;
+  border-color: #4e6fff;
+  color: #fff !important;
+}
+.btn-second {
+  background: #ffffff;
+  border: 1px solid #4e6fff;
+  color: #4e6fff !important;
+}
+.btn-third {
+  background: #eaeeff;
+  border-color: #eaeeff;
+  color: #4e6fff !important;
+}
+.btn-fourth {
+  background: #ebedf2;
+  border-color: #ebedf2;
+  color: #5d5f66 !important;
+}
+.btn-text {
+  background: transparent;
+  border-color: transparent;
+  color: #4e6fff !important;
+}
+.btn-warn {
+  background: #f35c47;
+  border-color: #f35c47;
+  color: #ffffff !important;
+}

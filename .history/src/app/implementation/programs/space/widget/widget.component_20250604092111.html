@@ -1,0 +1,54 @@
+<!-- 主布局 -->
+<nz-layout class="widget-layout">
+  <header class="widget-header">
+    <div class="header-left">
+      <button nz-button nzType="text">
+        <i nz-icon nzType="left"></i>
+      </button>
+      <span class="title">{{ title }}</span>
+      <span class="save-time">{{ saveTime }}</span>
+    </div>
+    <div class="header-right">
+      <button nz-button class="save-btn" (click)="saveTemporary()">暂存</button>
+      <button
+        nz-button
+        nzType="primary"
+        class="template-btn"
+        (click)="saveAsTemplate()"
+      >
+        保存为模板
+      </button>
+    </div>
+  </header>
+  <nz-layout class="main-content">
+    <app-component-panel
+      class="left-panel"
+      (componentAdded)="handleComponentAdded($event)"
+    >
+    </app-component-panel>
+    <!-- 中间画布区 -->
+    <nz-content
+      style="
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <div style="text-align: center">
+        <!-- <img
+          src="https://img.alicdn.com/imgextra/i1/O1CN01Qw0QwC1w6Qw6Qw6Qw_!!6000000000000-2-tps-200-200.png"
+          width="120"
+        /> -->
+        <div style="color: #bfbfbf; margin-top: 16px">暂无内容</div>
+      </div>
+    </nz-content>
+
+    <!-- 右侧属性面板 -->
+    <app-property-panel
+      class="right-panel"
+      [selectedComponent]="selectedComponent"
+    >
+    </app-property-panel>
+  </nz-layout>
+</nz-layout>

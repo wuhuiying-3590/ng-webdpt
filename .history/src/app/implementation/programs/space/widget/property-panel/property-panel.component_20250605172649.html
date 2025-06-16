@@ -1,0 +1,118 @@
+<div class="property-panel">
+  <div class="panel-header">
+    <span class="panel-title">基础配置</span>
+    <button nz-button nzType="text" (click)="handleClosePanel()">
+      <i nz-icon [nzIconfont]="'icon-right-panel'"></i>
+    </button>
+  </div>
+
+  <div *ngIf="!selectedComponent" class="no-component-selected">
+    <div class="empty-hint">
+      <img src="assets/img/widget/empty-box.webp" alt="settings" />
+      <p>选择元素查看相关配置</p>
+    </div>
+  </div>
+
+  <div *ngIf="selectedComponent" class="component-properties">
+    <form [formGroup]="propertyForm">
+      <!-- 基本信息 -->
+      <div class="property-section">
+        <nz-form-item class="form-item-vertical">
+          <nz-form-label nzFor="backgroundType">背景</nz-form-label>
+          <nz-form-control>
+            <nz-radio-group
+              id="backgroundType"
+              formControlName="backgroundType"
+              nzButtonStyle="solid"
+              class="w-radio"
+            >
+              <label
+                *ngFor="let item of backgroundTypeOption"
+                nz-radio-button
+                [nzValue]="item.value"
+                >{{ item.label }}</label
+              >
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="form-item-inline">
+          <nz-form-label nzFor="lineSpace">行间距</nz-form-label>
+          <nz-form-control>
+            <nz-select
+              id="lineSpace"
+              formControlName="lineSpace"
+              [nzOptions]="lineSpaceOption"
+            ></nz-select>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="form-item-inline">
+          <nz-form-label nzFor="internalSpace">内边距</nz-form-label>
+          <nz-form-control>
+            <nz-select
+              id="internalSpace"
+              formControlName="internalSpace"
+              [nzOptions]="internalSpaceOption"
+            ></nz-select>
+          </nz-form-control>
+        </nz-form-item>
+
+        <ng-container *ngIf="selectedComponent.type !== 'root'">
+          <nz-form-item class="form-item-inline">
+            <nz-form-label nzFor="borderRadius">圆角</nz-form-label>
+            <nz-form-control>
+              <nz-select
+                id="borderRadius"
+                formControlName="borderRadius"
+                [nzOptions]="borderRadiusOption"
+              ></nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </ng-container>
+
+        <!-- 根据组件类型显示不同的属性设置 -->
+        <!-- <ng-container
+          class="property-section"
+          *ngIf="
+            selectedComponent.type === 'title' ||
+            selectedComponent.type === 'text'
+          "
+        >
+          <nz-form-item>
+            <nz-form-label>文本内容</nz-form-label>
+            <nz-form-control>
+              <textarea
+                nz-input
+                formControlName="textContent"
+                rows="3"
+              ></textarea>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label>字体大小</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="fontSize" placeholder="14px" />
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label>字体粗细</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="fontWeight">
+                <nz-option nzValue="normal" nzLabel="常规"></nz-option>
+                <nz-option nzValue="bold" nzLabel="粗体"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label>文本颜色</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="color" placeholder="#000000" />
+            </nz-form-control>
+          </nz-form-item>
+        </ng-container> -->
+      </div>
+    </form>
+  </div>
+</div>

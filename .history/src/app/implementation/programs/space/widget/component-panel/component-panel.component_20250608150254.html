@@ -1,0 +1,46 @@
+<div class="component-panel">
+  <div class="panel-header">
+    <nz-tabset [nzTabBarExtraContent]="extraTemplate">
+      <nz-tab nzTitle="组件">
+        <nz-collapse [nzBordered]="false" class="left-collapse">
+          <nz-collapse-panel
+            *ngFor="let category of componentCategories; let i = index"
+            [nzHeader]="category.name"
+            [nzActive]="category.open"
+            [nzShowArrow]="false"
+            [nzExtra]="extraTpl"
+            [nzPanelKey]="i"
+            (nzActiveChange)="onPanelActiveChange(i, $event)"
+            [sortablejs]="category.components"
+          >
+            <div class="component-grid">
+              <div
+                *ngFor="let component of category.components"
+                class="component-item"
+                (click)="addComponent(component)"
+              >
+                <!-- draggable="true"
+                (dragstart)="onDragStart($event, component)" -->
+                <div class="component-icon">
+                  <img [src]="component.icon" alt="component icon" />
+                </div>
+                <div class="component-name">{{ component.name }}</div>
+              </div>
+            </div>
+            <ng-template #extraTpl>
+              <i
+                nz-icon
+                [nzIconfont]="!category.open ? 'icon-up' : 'icon-down'"
+              ></i>
+            </ng-template>
+          </nz-collapse-panel>
+        </nz-collapse>
+      </nz-tab>
+    </nz-tabset>
+    <ng-template #extraTemplate>
+      <button nz-button nzType="text" (click)="handleClosePanel()">
+        <i nz-icon [nzIconfont]="'icon-left-panel'"></i>
+      </button>
+    </ng-template>
+  </div>
+</div>
